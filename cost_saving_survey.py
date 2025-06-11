@@ -4,14 +4,12 @@ st.title("Dotazník pro energetická opatření")
 
 # === 1. Použití LED svítidel ===
 st.header("1. Použití LED svítidel")
-col1a, col2a, col3a = st.columns(3)
+col1a, col2a = st.columns(2)
 
 with col1a:
     q1 = st.radio("Používají se úsporná svítidla?", ["Ano", "Ne"], key="q1")
 with col2a:
     q2 = st.radio("Je osvětlení v provozu více než 4 h denně?", ["Ano", "Ne"], key="q2")
-with col3a:
-    q3 = st.radio("Je osvětlení původní (starší 10 let)?", ["Ano", "Ne"], key="q3")
 
 if q1 == "Ne" and q2 == "Ano" and q3 == "Ano":
     st.success("Na základě odpovědí doporučujeme posoudit výměnu za LED.")
@@ -43,7 +41,7 @@ col1b, col2b, col3b = st.columns(3)
 with col1b:
     q1_b = st.radio("Dochází během slunečních dnů k přehřívání místnosti", ["Ano", "Ne"], key="q1_b")
 with col2b:
-    q2_b = st.radio("Obsahuje místnost větší množství oken?", ["Ano", "Ne"], key="q2_b")
+    q2_b = st.radio("Obsahuje místnost větší množství oken?", ["Ano", "Ne"], key="q2_b", index=1)
 with col3b:
     q3_b = st.radio("Je místnost vystavena přímému slunečnímu svitu", ["Ano", "Ne"], key="q3_b")
 
@@ -75,11 +73,11 @@ else:
 st.header("3. Výměna radiátorových hlavic")
 col1c, col2c, col3c = st.columns(3)
 with col1c:
-    q1_c = st.radio("Instalované hlavice jsou mechanické (ne termostatické)?", ["Ano", "Ne"], key="q1_c")
+    q1_c = st.radio("Instalované hlavice jsou mechanické (ne termostatické)?", ["Ano", "Ne"], key="q1_c", index=1)
 with col2c:
-    q2_c = st.radio("Dochází k přetápění místností? (i o jednotky stupňů)", ["Ano", "Ne"], key="q2_c")
+    q2_c = st.radio("Obsahuje budova prostory s odlišnými tepelnými požadavky (např. ordinace vs. byty)? (i o jednotky stupňů)", ["Ano", "Ne"], key="q2_c")
 with col3c:
-    q3_c = st.radio("Je budova ústředně vytápěna?", ["Ano", "Ne"], key="q3_c")
+    q3_c = st.radio("Dochází v některých částech domu k přetápění kvůli orientaci na jih nebo jiným tepelným ziskům?", ["Ano", "Ne"], key="q3_c")
 
 if q1_c == "Ano" and q2_c == "Ano" and q3_c == "Ano":
     st.success("Na základě odpovědí doporučujeme výměnu hlavic.")
@@ -97,15 +95,13 @@ else:
 
 # === 4. Senzory pohybu na světla ===
 st.header("4. Instalace senzorů pohybu na osvětlení")
-col1d, col2d, col3d = st.columns(3)
+col1d, col2d = st.columns(2)
 with col1d:
-    q1_d = st.radio("Dochází ke zbytečnému svícení ve společných prostorách (chodby, kuchyňky, ...?", ["Ano", "Ne"], key="q1_d")
+    q1_d = st.radio("Dochází ke zbytečnému svícení ve společných prostorách (chodby, kuchyňky, WC, ...?", ["Ano", "Ne"], key="q1_d")
 with col2d:
-    q2_d = st.radio("Nejsou místnosti aktuálně vybaveny senzory?", ["Ano", "Ne"], key="q2_d")
-with col3d:
-    q3_d = st.radio("Je osvětlení řízeno ručně nebo časovačem?", ["Ano", "Ne"], key="q3_d")
+    q2_d = st.radio("Jsou místnosti aktuálně vybaveny senzory?", ["Ano", "Ne"], key="q2_d")
 
-if q1_d == "Ano" and q2_d == "Ano" and q3_d == "Ano":
+if q1_d == "Ano" and q2_d == "Ne":
     st.success("Na základě odpovědí doporučujeme zvážit instalaci senzorů pohybu.")
     if "sensor_fields" not in st.session_state:
         st.session_state.sensor_fields = 1
@@ -141,7 +137,7 @@ else:
 st.header("5. Izolace potrubí pro chlazení/topení")
 col1e, col2e, col3e = st.columns(3)
 with col1e:
-    q1_e = st.radio("Jsou části potrubí vedeny v netemperovaných prostorách?", ["Ano", "Ne"], key="q1_e")
+    q1_e = st.radio("Jsou části potrubí vedeny v netemperovaných prostorách?", ["Ano", "Ne"], key="q1_e", index=1)
 with col2e:
     q2_e = st.radio("Je izolace stará, poškozená nebo zcela chybí?", ["Ano", "Ne"], key="q2_e")
 with col3e:
@@ -172,7 +168,7 @@ if q1_e == "Ano" and q2_e == "Ano" and q3_e == "Ano":
             st.number_input("Tloušťka potrubí [m]", min_value=0, key=f"d_potrubi_{i}")
         col5e, col6e, col7e= st.columns(3)
         with col5e:
-            st.text_input("Teplota média [°C]", key=f"medium_temp_{i}")
+            st.number_input("Teplota média [°C]", key=f"medium_temp_{i}")
         with col6e:
             st.number_input("Teplota okolí [°C]", min_value=0.0, key=f"okoli_temp_{i}")
         with col7e:
