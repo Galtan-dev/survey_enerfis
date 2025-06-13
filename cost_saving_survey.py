@@ -11,7 +11,7 @@ with col1a:
 with col2a:
     q2 = st.radio("Je osvětlení v provozu více než 4 h denně?", ["Ano", "Ne"], key="q2")
 
-if q1 == "Ne" and q2 == "Ano" and q3 == "Ano":
+if q1 == "Ne" and q2 == "Ano":
     st.success("Na základě odpovědí doporučujeme posoudit výměnu za LED.")
     if "led_fields" not in st.session_state:
         st.session_state.led_fields = 1
